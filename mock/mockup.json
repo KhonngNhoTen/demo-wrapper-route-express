@@ -1,0 +1,13 @@
+{
+    "Pet": {
+        "id": 1,
+        "name": "Pet's name"
+    },
+    "User": {
+        "id": 1,
+        "email": "email@email.com",
+        "password": "123456a@",
+        "name": "User's name",
+        "idRole": 1
+    }
+}
