@@ -24,6 +24,7 @@ async function initCasbinAuthorization() {
     true
   );
   casbinAuthorization = new CasbinAuthorization(adapter);
+  if (!casbinAuthorization.enforcer) await casbinAuthorization.initEnforcerPromise();
 }
 
 function getCasbinAuthorization() {

@@ -1,5 +1,5 @@
 const { Model, DataTypes, UUIDV4 } = require("sequelize");
-const CasbinAuthorization = require("../configs/CasbinAuthorization").getCasbinAuthorization();
+const CasbinAuthorization = require("../configs/CasbinAuthorization");
 const md5 = require("md5");
 /** @interface */
 class User extends Model {
@@ -37,8 +37,14 @@ class User extends Model {
       },
       {
         hooks: {
+          /**
+           * after create new User. Adding relationship between role and user into enforcer
+           * @param {User} user
+           */
           afterCreate: async (user) => {
-            await CasbinAuthorization.enforcer.addRoleForUser(user.id, user.idRole);
+            if (!CasbinAuthorization.getCasbinAuthorization()) await CasbinAuthorization.initCasbinAuthorization();
+            let casbin = CasbinAuthorization.getCasbinAuthorization();
+            await casbin.enforcer.addRoleForUser(user.id, user.idRole);
           },
         },
         sequelize: connection,
