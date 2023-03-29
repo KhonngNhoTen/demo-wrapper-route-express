@@ -4,7 +4,7 @@ const env = require("./env");
 
 /** @type {CasbinAuthorization} */
 let casbinAuthorization;
-async function initCasbinAuthorization() {
+async function loadCasbinAuthorization() {
   const adapter = await SequelizeAdapter.newAdapter(
     {
       username: env.DATABASE.DB_USER,
@@ -31,4 +31,4 @@ function getCasbinAuthorization() {
   return casbinAuthorization;
 }
 
-module.exports = { initCasbinAuthorization, getCasbinAuthorization };
+module.exports = { loadCasbinAuthorization, getCasbinAuthorization };

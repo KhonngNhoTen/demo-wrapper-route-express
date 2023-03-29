@@ -1,6 +1,8 @@
 const { Model, DataTypes, UUIDV4 } = require("sequelize");
 const CasbinAuthorization = require("../configs/CasbinAuthorization");
+const jwt = require("jsonwebtoken");
 const md5 = require("md5");
+const env = require("../configs/env");
 /** @interface */
 class User extends Model {
   static associate({ User }) {
@@ -81,6 +83,19 @@ class User extends Model {
 
   getPublicInfo() {
     delete this.dataValues.password;
+  }
+
+  /**
+   * Generate token with payload is idUser
+   */
+  async genToken() {
+    const id = this.id;
+    return new Promise((resolve) => {
+      jwt.sign({ id }, env.SERVER.SECRET_KEY, { expiresIn: "1d" }, (error, payload) => {
+        if (error) console.log(error);
+        resolve(payload);
+      });
+    });
   }
 }
 

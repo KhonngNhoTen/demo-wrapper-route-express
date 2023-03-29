@@ -1,3 +1,4 @@
+const AuthController = require("../controllers/Auth.controller");
 const { WrapperGroupRoute, SchemaValidator, Mockup } = require("wrapper-route");
 module.exports = new WrapperGroupRoute({
   tag: "Auth",
@@ -5,10 +6,12 @@ module.exports = new WrapperGroupRoute({
   baseUrl: "/",
   routes: [
     {
-      path: "/login",
+      authRequire: false,
+      path: "POST /login",
       description: "Login API",
       body: new SchemaValidator("User").hide(["id", "name", "idRole"]),
-      response: new Mockup("User").build(),
+      response: { user: new Mockup("User").build(), token: "string jwt" },
+      handler: AuthController.login,
     },
   ],
 });
