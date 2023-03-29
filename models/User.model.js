@@ -44,7 +44,7 @@ class User extends Model {
            * @param {User} user
            */
           afterCreate: async (user) => {
-            if (!CasbinAuthorization.getCasbinAuthorization()) await CasbinAuthorization.initCasbinAuthorization();
+            if (!CasbinAuthorization.getCasbinAuthorization()) await CasbinAuthorization.loadCasbinAuthorization();
             let casbin = CasbinAuthorization.getCasbinAuthorization();
             await casbin.enforcer.addRoleForUser(user.id, user.idRole);
           },
