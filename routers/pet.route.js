@@ -25,11 +25,13 @@ module.exports = new WrapperGroupRoute({
       permissions: ["3"],
     },
     {
+      authRequire: false,
       description: "Detail a pet",
       path: "GET /:idPet",
       parameters: { idPet: 1 },
       response: new Mockup("Pet").build(),
       handler: PetController.detail,
+      permissions: ["3"],
     },
     {
       description: "Update a pet",
@@ -37,6 +39,7 @@ module.exports = new WrapperGroupRoute({
       parameters: { idPet: 1 },
       response: new Mockup("Pet").build(),
       handler: PetController.update,
+      permissions: ["3"],
     },
     {
       description: "Deletet a pet",
@@ -44,6 +47,7 @@ module.exports = new WrapperGroupRoute({
       parameters: { idPet: 1 },
       response: { msg: "Ok" },
       handler: PetController.delete,
+      permissions: ["3"],
     },
   ],
 });
