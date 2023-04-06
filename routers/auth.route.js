@@ -8,7 +8,7 @@ module.exports = new GroupRoute({
   routes: [
     {
       path: "POST /login",
-      body: new SchemaValidation("User").attributes("email", "password"),
+      body: new SchemaValidation("User").attributes(["email", "password"]),
       handler: AuthController.login,
       response: { user: new Mockup("User").build(), token: "" },
     },
