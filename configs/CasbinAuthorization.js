@@ -1,4 +1,4 @@
-const { CasbinAuthorization } = require("wrapper-route").Authorization;
+const { CasbinAuthorization } = require("wrapper-route");
 const { SequelizeAdapter } = require("casbin-sequelize-adapter");
 const env = require("./env");
 
@@ -23,8 +23,8 @@ async function loadCasbinAuthorization() {
     },
     true
   );
-  casbinAuthorization = new CasbinAuthorization(adapter);
-  if (!casbinAuthorization.enforcer) await casbinAuthorization.initEnforcerPromise();
+  casbinAuthorization = new CasbinAuthorization();
+  await casbinAuthorization.setUp(adapter);
 }
 
 function getCasbinAuthorization() {

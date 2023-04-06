@@ -1,17 +1,16 @@
 const AuthController = require("../controllers/Auth.controller");
-const { WrapperGroupRoute, SchemaValidator, Mockup } = require("wrapper-route");
-module.exports = new WrapperGroupRoute({
+const { Mockup } = require("wrapper-route");
+const { GroupRoute, SchemaValidation } = require("wrapper-route");
+module.exports = new GroupRoute({
   tag: "Auth",
-  descriptionGroupRoute: "Authentication API",
-  baseUrl: "/",
+  authRequired: false,
+  descriptionGroupRoute: "Every API for auth",
   routes: [
     {
-      authRequire: false,
       path: "POST /login",
-      description: "Login API",
-      body: new SchemaValidator("User").hide(["id", "name", "idRole"]),
-      response: { user: new Mockup("User").build(), token: "string jwt" },
+      body: new SchemaValidation("User").attributes("email", "password"),
       handler: AuthController.login,
+      response: { user: new Mockup("User").build(), token: "" },
     },
   ],
 });
