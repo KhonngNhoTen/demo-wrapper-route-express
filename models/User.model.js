@@ -46,7 +46,7 @@ class User extends Model {
           afterCreate: async (user) => {
             if (!CasbinAuthorization.getCasbinAuthorization()) await CasbinAuthorization.loadCasbinAuthorization();
             let casbin = CasbinAuthorization.getCasbinAuthorization();
-            await casbin.enforcer.addRoleForUser(user.id, user.idRole);
+            await casbin.context.addRoleForUser(user.id, user.idRole);
           },
         },
         sequelize: connection,

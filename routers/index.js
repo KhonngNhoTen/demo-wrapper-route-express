@@ -1,9 +1,8 @@
 const router = require("express").Router();
 const glob = require("glob");
 const path = require("path");
-
-const { WrapperRoute, TokenAuthentication } = require("wrapper-route");
-const InitialSwaggerBuilder = require("../wrapper-route/Cores/InitialSwaggerBuilder");
+const fs = require("fs");
+const { WrapperRoute, TokenAuthentication, InitialSwaggerBuilder } = require("wrapper-route");
 const env = require("../configs/env");
 const { User } = require("../models/User.model");
 
@@ -28,13 +27,17 @@ const wrapperRoute = new WrapperRoute({
 
 async function main() {
   let groupRoute = [];
-  glob
-    .globSync(path.join(__dirname, "*.route.js").replace(/\\/g, "/"))
-    // .map((e) => e.split("/").pop())
-    .forEach(async (path) => {
-      groupRoute.push(require(path));
-    });
-
+  // glob
+  //   .globSync(path.join(__dirname, "*.route.js").replace(/\\/g, "/"))
+  //   // .map((e) => e.split("/").pop())
+  //   .forEach(async (path) => {
+  //     groupRoute.push(require(path));
+  //   });
+  fs.readdirSync(__dirname).forEach((file) => {
+    if (file === "index.js") return;
+    const route = require("./" + file);
+    groupRoute.push(route);
+  });
   await wrapperRoute.registry(groupRoute, router);
   return router;
 }
