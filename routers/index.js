@@ -17,8 +17,9 @@ const wrapperRoute = new WrapperRoute({
   fileValidations: path.join(__dirname, "../validation/validation.js"),
   initialSwagger: initialSwaggerBuilder,
   logging: true,
+  deletePermissionNotExists: "delete",
+  detailMiddleware: (req, res, next) => ({ req, res, next }),
   securityRoute: {
-    detailMiddleware: (req, res, next) => ({ req, res, next }),
     authentications: new TokenAuthentication(env.SERVER.SECRET_KEY, async (id) => await User.findByPk(id)),
     authorization: casbinAuthorization,
   },

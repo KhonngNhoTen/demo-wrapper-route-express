@@ -11,7 +11,19 @@ AuthController.login = async (req, res, next) => {
       },
     });
     const token = await user.genToken();
+    await user.update({ token });
     next({ user, token });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+AuthController.logout = async (req, res, next) => {
+  try {
+    console.log(res.account);
+    await User.update({ token: "" }, { where: { id: res.account.id } });
+    next({ msg: "Ok" });
   } catch (error) {
     console.error(error);
     next(error);

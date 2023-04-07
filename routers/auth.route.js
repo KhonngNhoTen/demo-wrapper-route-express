@@ -12,5 +12,10 @@ module.exports = new GroupRoute({
       handler: AuthController.login,
       response: { user: new Mockup("User").build(), token: "" },
     },
+    {
+      path: "POST /logout",
+      handler: AuthController.logout,
+      response: { msg: "Ok" },
+    },
   ],
 });

@@ -9,4 +9,5 @@ const { User } = require("../models");
     password: require("md5")("123456a@"),
     idRole: User.ROLES.ADMIN,
   });
+  process.exit(1);
 })();

@@ -32,6 +32,9 @@ class User extends Model {
         name: {
           type: DataTypes.STRING,
         },
+        token: {
+          type: DataTypes.STRING,
+        },
         idRole: {
           type: DataTypes.INTEGER,
           defaultValue: 1,
@@ -100,6 +103,7 @@ class User extends Model {
 }
 
 class StructureUserModel extends User {
+  parent = User;
   id = 0;
   uid = "";
   email = "";
@@ -113,5 +117,7 @@ class StructureUserModel extends User {
   deleteAt = new Date();
   destroyTime = new Date();
 }
+
+User.findAll;
 
 module.exports = { StructureUserModel, User };

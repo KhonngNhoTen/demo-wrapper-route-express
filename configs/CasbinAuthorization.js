@@ -23,6 +23,7 @@ async function loadCasbinAuthorization() {
     },
     true
   );
+
   casbinAuthorization = new CasbinAuthorization();
   await casbinAuthorization.setUp(adapter);
 }
