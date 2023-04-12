@@ -5,6 +5,7 @@ const md5 = require("md5");
 const env = require("../configs/env");
 /** @interface */
 class User extends Model {
+  /** @param {Object.<string, typeof Model>} param */
   static associate({ User }) {
     return User;
   }
@@ -57,6 +58,7 @@ class User extends Model {
         paranoid: true,
       }
     );
+    return User;
   }
 
   /**
@@ -79,8 +81,8 @@ class User extends Model {
    * @enum { number }
    */
   static ROLES = {
-    STUDENT: 1,
-    TEACHER: 2,
+    READER: 1,
+    AUTHOR: 2,
     ADMIN: 3,
   };
 
@@ -103,9 +105,9 @@ class User extends Model {
 }
 
 class StructureUserModel extends User {
-  parent = User;
+  /** @private */
+  static parent = User;
   id = 0;
-  uid = "";
   email = "";
   password = "";
   name = "";
@@ -115,9 +117,7 @@ class StructureUserModel extends User {
 
   createdAt = new Date();
   deleteAt = new Date();
-  destroyTime = new Date();
+  deletedAt = new Date();
 }
 
-User.findAll;
-
-module.exports = { StructureUserModel, User };
+module.exports = StructureUserModel;
