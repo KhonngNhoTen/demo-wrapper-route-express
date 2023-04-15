@@ -1,37 +1,30 @@
+const { Model } = require("sequelize");
 const { connection } = require("../databases");
-const loadModels = {
-  User: require(`./User.model`),
-  Pet: require(`./Pet.model`),
-};
-const TypeModel = {
-  User: loadModels.User.StructureUserModel,
-  Pet: loadModels.User.StructureUserModel,
+
+const ModelStructures = {
+  User: require(`./Users.model`),
+  Novels: require("./Novels.model"),
+  Vols: require("./Vols.model"),
+  Chapters: require("./Chapters.model"),
 };
 
-/// config associattions
-/** @type {TypeModel} */
+/** @type {ModelStructures} */
 let models = {};
 
-const nameModels = Object.keys(loadModels);
+const keys = Object.keys(ModelStructures);
+for (let i = 0; i < keys.length; i++) {
+  const key = keys[i];
 
-// load model
-for (let i = 0; i < nameModels.length; i++) {
-  const model = loadModels[nameModels[i]][nameModels[i]];
-  model.loadModel(connection);
-  models[nameModels[i]] = model;
+  if (!ModelStructures[key].parent) throw Error(`Model ${key}.parent not define`);
+  models[key] = ModelStructures[key].parent;
+  models[key].loadModel(connection);
 }
-// load associate
-for (let i = 0; i < nameModels.length; i++)
-  if (models[nameModels[i]].associate) models[nameModels[i]] = models[nameModels[i]].associate(models);
 
-// (async () => {
-//   console.log("INIT DATA");
-//   await connection.sync({ force: true });
-//   const admin = await models.User.create({
-//     name: "admin",
-//     email: "admin@admin.com",
-//     password: require("md5")("123456a@"),
-//     idRole: models.User.ROLES.ADMIN,
-//   });
-// })();
+// setup associates
+for (let i = 0; i < keys.length; i++) {
+  if (models[keys[i]].associate) {
+    models[keys[i]].associate(models);
+  }
+}
+
 module.exports = models;
