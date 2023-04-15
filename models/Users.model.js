@@ -105,8 +105,6 @@ class User extends Model {
 }
 
 class StructureUserModel extends User {
-  /** @private */
-  static parent = User;
   id = 0;
   email = "";
   password = "";

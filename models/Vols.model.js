@@ -46,8 +46,6 @@ class VolsStructure extends Vols {
   createdAt = new Date();
   deleteAt = new Date();
   deletedAt = new Date();
-
-  static parent = Vols;
 }
 
 module.exports = VolsStructure;

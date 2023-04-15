@@ -15,9 +15,8 @@ const keys = Object.keys(ModelStructures);
 for (let i = 0; i < keys.length; i++) {
   const key = keys[i];
 
-  if (!ModelStructures[key].parent) throw Error(`Model ${key}.parent not define`);
-  models[key] = ModelStructures[key].parent;
-  models[key].loadModel(connection);
+  if (!ModelStructures[key].loadModel) throw Error(`Model ${key}.loadModel not define`);
+  models[key] = ModelStructures[key].loadModel(connection);
 }
 
 // setup associates

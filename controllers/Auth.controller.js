@@ -29,4 +29,13 @@ AuthController.logout = async (req, res, next) => {
     next(error);
   }
 };
+
+AuthController.forgotPassword = async (req, res, next) => {
+  try {
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 module.exports = AuthController;

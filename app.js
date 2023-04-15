@@ -41,4 +41,4 @@ app.start = async (callBack) => {
   await callBack();
 };
 
-module.exports = app;
+export default app;

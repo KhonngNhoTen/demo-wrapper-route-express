@@ -53,7 +53,6 @@ class Novels extends Model {
 }
 
 class NovelsStructure extends Novels {
-  static parent = Novels;
   id = 0;
   name = "";
   description = "";
